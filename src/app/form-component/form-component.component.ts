@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Persona } from '../persona';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-form-component',
   templateUrl: './form-component.component.html',
-  styleUrls: ['./form-component.component.css']
+  styleUrls: ['./form-component.component.css'],
+  providers: [DataService]
 })
 export class FormComponentComponent implements OnInit {
 
@@ -14,17 +16,14 @@ export class FormComponentComponent implements OnInit {
 
   submitted = false;
 
+  db: any;
+
   onSubmit(){
-    if(this.model.savePersona(this.model)){
-      this.submitted = true;
-    }
-    else{
-      console.log("Un error ocurrio");
-    }
-    
+      this.submitted = true; 
   }
 
-  constructor() { 
+  constructor(data:DataService) { 
+    this.db=data;
   }
 
   ngOnInit() {
@@ -38,6 +37,8 @@ export class FormComponentComponent implements OnInit {
   newPersona(){
     this.model = new Persona(2,'Juancho',this.powers[1],'Juanto');
     this.model.savePersona(this.model);
+    this.db.saveUser(this.model);
+    this.db.getUser();
   }
 
 }
