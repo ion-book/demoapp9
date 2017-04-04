@@ -1,23 +1,49 @@
 <div class="container">
+  <div [hidden]="submitted">
   <h1>Formulario</h1>
-  <form (ngSubmit)="newPersona()">
+  <form (ngSubmit)="onSubmit()" #personaForm="ngForm" >
     <div class="form-group">
       <label for="name">Nombre</label>
       <input type="text" class="form-control" id="name" required
-      [(ngModel)]="model.name" name="name">
+      [(ngModel)]="model.name" name="name"
+      #name="ngModel">
     </div>
     <div class="form-group">
       <label for="alterEgo">Alias</label>
       <input type="text" class="form-control" id="alterEgo" required
-      [(ngModel)]="model.alterEgo" name="alterEgo">
+      [(ngModel)]="model.alterEgo" name="alterEgo"
+      #alterEgo="ngModel">
     </div>
     <div class="form-group">
       <label for="power">Caracteristica</label>
       <select class="form-control" id="power" required
-      [(ngModel)]="model.power" name="power">
+      [(ngModel)]="model.power" name="power"
+      #power="ngModel">
         <option *ngFor="let pow of powers">{{pow}}</option>
       </select>
     </div>
-  <button class="btn btn-success" type="submit">Enviar</button>
+     
+     <button type="submit" class="btn btn-success" [disabled]="!personaForm.form.valid">Submit</button>
+     <button type="button" class="btn btn-default" (click)="newPersona(); personaForm.reset()">New Persona</button>
+
   </form>
+  </div>
+
+<div [hidden]="!submitted">
+    <h2>Has enviado lo siguiente:</h2>
+    <div class="row">
+      <div class="col-xs-3">Nombre</div>
+      <div class="col-xs-9  pull-left">{{ model.name }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Alias</div>
+      <div class="col-xs-9 pull-left">{{ model.alterEgo }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Caracteristica</div>
+      <div class="col-xs-9 pull-left">{{ model.power }}</div>
+    </div>
+    <br>
+    <button class="btn btn-primary" (click)="submitted=false">Edit</button>
+  </div>
 </div>

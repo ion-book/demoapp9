@@ -26,7 +26,7 @@ export class FormComponentComponent implements OnInit {
   get diagnostic(){ return JSON.stringify(this.model); }
 
   newPersona(){
-    this.model = new Persona(2,'Pedro',this.powers[1], 'dev');
+    this.model = new Persona(2,'','');
   }
 
 }
