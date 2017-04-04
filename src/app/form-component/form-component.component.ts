@@ -10,23 +10,34 @@ export class FormComponentComponent implements OnInit {
 
   powers = ['Inteligente', 'Creativo', 'Sincero', 'Productivo','Sensible'];
 
-  model = new Persona(1,'Juan',this.powers[0],'Mr Increible');
+  model: any = new Persona(1,'','');
 
   submitted = false;
 
   onSubmit(){
-    this.submitted = true;
+    if(this.model.savePersona(this.model)){
+      this.submitted = true;
+    }
+    else{
+      console.log("Un error ocurrio");
+    }
+    
   }
 
-  constructor() { }
+  constructor() { 
+  }
 
   ngOnInit() {
+    this.model = this.model.getPersona();
+    if (this.model === null){ this.model = new Persona(1,'','');}
+    console.log(JSON.stringify(this.model));
   }
 
   get diagnostic(){ return JSON.stringify(this.model); }
 
   newPersona(){
-    this.model = new Persona(2,'','');
+    this.model = new Persona(2,'Juancho',this.powers[1],'Juanto');
+    this.model.savePersona(this.model);
   }
 
 }
